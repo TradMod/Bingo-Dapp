@@ -1,2 +1,2 @@
-* Back-end (Smart Contracts) ..... DONE
+* Back-end (Smart Contracts) ..... Almost Done
 * Front-end (Next.js) ..... In Development Phase
