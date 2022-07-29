@@ -23,6 +23,21 @@ module.exports = {
       accounts: [process.env.PRIVATE_KEY],
     }
   },
+  etherscan: {
+    apiKey: {
+      rinkeby: process.env.ETHERSCAN_API_KEY,
+    },
+  },
+  gasReporter: {
+    enabled: false,
+    currency: "USD",
+    outputFile: "gas-report.txt",
+    noColors: true,
+    // coinmarketcap: process.env.COINMARKETCAP_API_KEY,
+  },
+  mocha: {
+    timeout: 900000,
+  },
   namedAccounts: {
     deployer: {
       default: 0.

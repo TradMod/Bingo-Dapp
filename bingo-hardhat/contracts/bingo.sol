@@ -28,11 +28,11 @@ contract Bingo is VRFConsumerBaseV2, KeeperCompatibleInterface {
     uint private immutable i_entranceFee;
     address payable[] private players;
     VRFCoordinatorV2Interface private immutable i_vrfCoordinator;
-    bytes32 private immutable i_keyHash;
+    bytes32 private immutable i_gasLane;
     uint64 private immutable i_subscriptionId;
     uint32 private immutable i_callbackGasLimit;
-    uint16 private constant REQUEST_CONFIRMATIONS = 2;
     uint32 private constant NUM_WORDS = 1;
+    uint16 private constant REQUEST_CONFIRMATIONS = 2;
 
     address private bingoWinner;
     BingoState private bingoState;
@@ -44,16 +44,16 @@ contract Bingo is VRFConsumerBaseV2, KeeperCompatibleInterface {
     event WinnerBingo(address indexed winner);
 
     constructor(
-        bytes32 keyHash,
+        bytes32 gasLane,
         address vrfCoordinatorV2,
-        uint _entranceFee,
+        uint entranceFee,
         uint64 subscriptionId,
         uint32 callbackGasLimit,
         uint256 interval
     ) VRFConsumerBaseV2(vrfCoordinatorV2) {
         i_vrfCoordinator = VRFCoordinatorV2Interface(vrfCoordinatorV2);
-        i_entranceFee = _entranceFee;
-        i_keyHash = keyHash;
+        i_entranceFee = entranceFee;
+        i_gasLane = gasLane;
         i_subscriptionId = subscriptionId;
         i_callbackGasLimit = callbackGasLimit;
         bingoState = BingoState.OPEN;
@@ -104,7 +104,7 @@ contract Bingo is VRFConsumerBaseV2, KeeperCompatibleInterface {
 
         bingoState = BingoState.CALCULATING;
         uint256 requestId = i_vrfCoordinator.requestRandomWords(
-            i_keyHash, //0xd89b2bf150e3b9e13446986e571fb9cab24b13cea0a43ea20a6049a85cc807cc
+            i_gasLane, //0xd89b2bf150e3b9e13446986e571fb9cab24b13cea0a43ea20a6049a85cc807cc
             i_subscriptionId,
             REQUEST_CONFIRMATIONS,
             i_callbackGasLimit,
